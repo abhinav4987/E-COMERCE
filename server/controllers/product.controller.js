@@ -4,6 +4,8 @@ const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 
 const createProduct = catchAsyncErrors( async (request, response, next) => {
 
+    const product = await Product.create(request.body);
+    respo 
 })
 
 

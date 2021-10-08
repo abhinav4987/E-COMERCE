@@ -5,20 +5,20 @@ const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 const router = express.Router();
 
 
-router.route("/register").post(userController);
-router.route("/login").post();
+router.route("/register").post(userController.registerUser);
+router.route("/login").post(userController.loginUser);
 
-router.route("/password/forgot").post();
+router.route("/password/forgot").post(userController.forgotPassword);
 
-router.route("/password/reset/:token").put();
+router.route("/password/reset/:token").put(userController.resetPassword);
 
-router.route("/logout").get();
+router.route("/logout").get(userController.logout);
 
-router.route("/me").get();
+router.route("/me").get(userController.getUserDetails);
 
-router.route("/password/update").put();
+router.route("/password/update").put(userController.updatePassword);
 
-router.route("/me/update").put();
+router.route("/me/update").put(userController.updateProfile);
 
 router.route("/admin/users").get();
 
