@@ -1,53 +1,60 @@
 const crypto = require("crypto");
 const cloudinary = require("cloudinary");
-
+const util = require('util')
+const fs = require('fs')
 const ErrorHandler = require("../utils/errorhandler");
 const sendToken = require("../utils/jwtToken");
 const catchAsyncErrors = require("../middleware/catchAsyncErrors");
 const User = require("../models/user.model");
 
+
+
 // ErrorHander
 const registerUser = catchAsyncErrors( async (request, response, next) => {
 
-    console.log("register request recieved  :  ", request);
-    // console.log(request);
-    const myCloud = await cloudinary.v2.uploader.upload(request.body.avatar, {
-        folder: "avatars",
-        width: 150,
-        crop: "scale",
-    });
+        // console.log(request.files.avatar.data);
+    const fileType = request.files.avatar.mimetype.replace("image/","");
+    fs.writeFileSync(`./Image.${fileType}`, request.files.avatar.data)
+    let myCloud = await cloudinary.v2.uploader.upload(`Image.${fileType}`,
+        {
+            folder: "avatars",
+            width: 150,
+            crop: "scale",
+        }, 
 
-    // cloudinary.v2.uploader.upload(request.body.avatar,
-    //     {
-    //         folder: "avatars",
-    //         width: 150,
-    //         crop: "scale",
-    //     }, 
-    //     function(error, result) {
-            
-    //         if(error) {
-    //             console.log("cloud error ", error);
-    //         } else {
-    //             console.log("cloud result ", result);
-    //         }
-    //     }
-    // );
-    
-    console.log("stage 2 : ",myCloud);
+
+        function(error, result) {
+            if(error) {
+                console.log("cloud Error : ");
+                fs.writeFile('./Output.txt', JSON.stringify(error), (err) => { 
+                    // In case of a error throw err. 
+                    if (err) throw err; 
+                }) 
+            } else {
+                console.log("cloud result ", result);
+            }
+        }
+    );
+
+
+    // console.log("cloud : ", myCloud.valueOf);
     const { name, email, password } = request.body;
     
+
     const user = await User.create({
         name,
         email,
         password,
-        // avatar: {
-        //     public_id: myCloud.public_id,
-        //     url: myCloud.secure_url,
-        // },
+        avatar: {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url,
+        },
     });
-    // console.log("stage 3");
+    console.log("stage 3", user);
+    fs.unlinkSync(`./Image.${fileType}`);
     sendToken(user, 201, response);
 })
+
 
 
 const loginUser = catchAsyncErrors( async (request, response, next) => {
@@ -249,3 +256,4 @@ module.exports = {
     updateUserRole,
     delteUser,
 }
+

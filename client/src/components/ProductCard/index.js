@@ -7,8 +7,8 @@ import './style.css';
 
 function index() {
     return (
-        <Link className="productCard" to="/" >
-            <img src={product}/>
+        <Link className="productCard" to={`/product/${product._id}`} >
+            <img src={product} />
             <p>Product</p>
             <div>
                 <Rating />

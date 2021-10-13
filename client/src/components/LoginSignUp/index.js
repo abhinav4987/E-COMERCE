@@ -2,12 +2,13 @@ import React, { Fragment, useRef, useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import MailOutlineIcon from "@material-ui/icons/MailOutline";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
+import { useAlert } from "react-alert";
 import FaceIcon from "@material-ui/icons/Face";
 import profile from '../../images/profile.png'
 import {login, register} from "../../redux/actions/user.action"
 import './style.css'
 
-function LoginSignUp() {
+function LoginSignUp({ history, location }) {
     
     const [avatar, setAvatar] = useState(profile);
     const [avatarPreview, setAvatarPreview] = useState(profile);
@@ -48,19 +49,31 @@ function LoginSignUp() {
         myForm.set("avatar", avatar);
         dispatch(register(myForm));
     };
+
+    const redirect = location.search ? location.search.split("=")[1]: "/account";
+    useEffect(() => {
+        if (isAuthenticated) {
+            history.push(redirect);
+        }
+    }, [dispatch, error,isAuthenticated]);
     const registerDataChange = (e) => {
         if (e.target.name === "avatar") {
             
                 const reader = new FileReader();
-                console.log("reader : ",e);
-                console.log("reader : ",reader);
+                
+                // console.log("reader : ",e);
+                // console.log("reader : ",reader);
             reader.onload = () => {
                 if (reader.readyState === 2) {
                     setAvatarPreview(reader.result);
-                    setAvatar(reader.result);
+                    setAvatar(e.target.files[0]);
                 }
             };
+
+
             reader.readAsDataURL(e.target.files[0]);
+            // setAvatar(e.target.files[0])
+            console.log("reader : ",reader);
         } else {
             setUser({ ...user, [e.target.name]: e.target.value });
         }

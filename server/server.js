@@ -34,12 +34,16 @@ cloudinary.config({
 // Route imports
 const PORT = process.env.PORT || 5001
 const user = require('./routes/user.routes');
+const product  = require('./routes/product.routes');
+
 
 server.use("/api/v1",user);
+server.use("/api/v1",product);
 
-server.listen(PORT, () => {
+let runninServer = server.listen(PORT, () => {
     console.log("Server is running!");
 })
+
 
 
 
@@ -48,7 +52,7 @@ process.on("unhandledRejection", (err) => {
     console.log(`Error: ${err}`);
     console.log(`Shutting down the server due to Unhandled Promise Rejection`);
 
-    server.close(() => {
+    runninServer.close(() => {
         process.exit(1);
     });
 });

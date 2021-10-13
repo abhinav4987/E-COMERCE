@@ -5,9 +5,9 @@ const { isAuthenticatedUser, authorizeRoles } = require("../middleware/auth");
 
 const router = express.Router();
 
-router.route("products").get()
+router.route("/products").get(productController.getAllProducts);
 
-router.route("admin/product/new").post();
+router.route("/admin/product/new").post();
 
 router.route("/admin/product/:id")
     .put()
@@ -22,3 +22,4 @@ router.route("/reviews")
     .delete();
 
 module.exports = router;
+
