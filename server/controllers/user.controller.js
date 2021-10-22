@@ -18,8 +18,7 @@ const registerUser = catchAsyncErrors( async (request, response, next) => {
     let myCloud = await cloudinary.v2.uploader.upload(`Image.${fileType}`,
         {
             folder: "avatars",
-            width: 150,
-            crop: "scale",
+            
         }, 
 
 
@@ -33,7 +32,7 @@ const registerUser = catchAsyncErrors( async (request, response, next) => {
             } else {
                 console.log("cloud result ", result);
             }
-        }
+        }   
     );
 
 
@@ -52,6 +51,8 @@ const registerUser = catchAsyncErrors( async (request, response, next) => {
     });
     console.log("stage 3", user);
     fs.unlinkSync(`./Image.${fileType}`);
+    response.set("Access-Control-Allow-Credentials", true)
+    response.set("withCredentials",true);
     sendToken(user, 201, response);
 })
 
@@ -131,9 +132,12 @@ const resetPassword = catchAsyncErrors( async (request, response, next) => {
 })
 
 const getUserDetails = catchAsyncErrors( async (request, response, next) => {
-    const user = await User.findById(request.user.id);
+    
+    console.log(request);
+    
+    const user = await User.findById(request.params.id);
 
-    res.status(200).json({
+    response.status(200).json({
         success: true,
         user,
     });
@@ -145,24 +149,37 @@ const updatePassword = catchAsyncErrors( async (request, response, next) => {
 })
 
 const updateProfile = catchAsyncErrors( async (request, response, next) => {
-
+    console.log(request.body);
+    console.log(request.files);
     const newUserData = {
         name: request.body.name,
         email: request.body.email,
     };
 
-    if (request.body.avatar !== "") {
+    if (request.files) {
         const user = await User.findById(request.user.id);
     
         const imageId = user.avatar.public_id;
     
         await cloudinary.v2.uploader.destroy(imageId);
-    
-        const myCloud = await cloudinary.v2.uploader.upload(request.body.avatar, {
+        const fileType = request.files.avatar.mimetype.replace("image/","");
+        fs.writeFileSync(`./Image.${fileType}`, request.files.avatar.data)
+        const myCloud = await cloudinary.v2.uploader.upload(`Image.${fileType}`, {
             folder: "avatars",
-            width: 150,
-            crop: "scale",
-        });
+        },
+        function(error, result) {
+            if(error) {
+                console.log("cloud Error : ");
+                fs.writeFile('./Output.txt', JSON.stringify(error), (err) => { 
+                    // In case of a error throw err. 
+                    if (err) throw err; 
+                }) 
+            } else {
+                console.log("cloud result ", result);
+            }
+        }  
+        
+        );
     
         newUserData.avatar = {
             public_id: myCloud.public_id,

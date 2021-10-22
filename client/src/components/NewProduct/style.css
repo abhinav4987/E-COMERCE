@@ -23,7 +23,7 @@
     margin: auto;
     padding: 3vmax;
     justify-content: space-evenly;
-    height: 70%;
+    height: auto;
     width: 40vh;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.267);
@@ -33,6 +33,7 @@
     display: flex;
     width: 100%;
     align-items: center;
+    margin-bottom: 5px;
 }
 
 .newProduct_form > div > input,
@@ -60,18 +61,22 @@
     display: flex;
     padding: 0%;
 }
+#createProduct_form_file > input {
+    color: white;
+}
+
 
 #createProduct_form_file > input::file-selector-button {
     cursor: pointer;
-    width: 100%;
+    width: 80%;
     z-index: 2;
     height: 5vh;
     border: none;
     margin: 0%;
-    font: 400 0.8vmax "Roboto";
+    font: 500 0.8vmax "Roboto";
     transition: all 0.5s;
     padding: 0 1vmax;
-    color: rgba(0, 0, 0, 0.623);
+    color: rgba(0, 0, 0, 0.582);
     background-color: rgb(255, 255, 255);
 }
 
@@ -85,7 +90,27 @@
     overflow: auto;
 }
 
-#createProduct_form_image > imng{
-    width: 3vmax;
+#createProduct_form_image > img{
+    width: 7vmax;
+    height: 7vmax;
     margin: 0 0.5vmax;
+}
+
+#createProduct_btn {
+    
+    border: none;
+    background-color: rgb(71, 166, 255);
+    color: white;
+    font: 300 0.9vmax "Roboto";
+    width: 100%;
+    padding: 0.8vmax;
+    cursor: pointer;
+    transition: all 0.5s;
+    border-radius: 4px;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+}
+
+#createProduct_btn:hover {
+    background-color: rgb(104, 178, 247);
 }

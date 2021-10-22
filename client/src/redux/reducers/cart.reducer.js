@@ -6,7 +6,7 @@ import {
 
 let initialState = {
     cartItems : [],
-    shoppingInfo: {}
+    shippingInfo: {}
 };
 
 export const cartReducer = (
@@ -22,10 +22,13 @@ export const cartReducer = (
             );
 
             if (isItemExist) {
+                
+                console.log("exists");
+                
                 return {
                 ...state,
                 cartItems: state.cartItems.map((i) =>
-                    i.product === isItemExist.product ? item : i
+                    i.product === isItemExist.product ? {...item, quantity: item.quantity + 1} : i
                 ),
                 };
             } else {

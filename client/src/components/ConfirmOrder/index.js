@@ -6,9 +6,41 @@ import {CheckOutSteps} from "../";
 import profile from '../../images/profile.png'
 import './style.css'
 
+
 const data = [1,1,1,1,1,1,1];
 
-function ConfirmOrder() {
+function ConfirmOrder({ history }) {
+    
+    const { shippingInfo, cartItems } = useSelector((state) => state.cart);
+    const { user } = useSelector((state) => state.user);
+    console.log("confirm order : ", user);
+    const subtotal = cartItems.reduce(
+        (acc, item) => acc + item.quantity * item.price,
+        0
+    );
+
+    const shippingCharges = subtotal > 1000 ? 0 : 200;
+
+    const tax = subtotal * 0.18;
+
+    const totalPrice = subtotal + tax + shippingCharges;
+
+    const address = `${shippingInfo.address}, ${shippingInfo.city}, ${shippingInfo.state}, ${shippingInfo.pinCode}, ${shippingInfo.country}`;
+
+
+    const proceedToPayment = () => {
+            const data = {
+                subtotal,
+                shippingCharges,
+                tax,
+                totalPrice,
+            };
+    
+        sessionStorage.setItem("orderInfo", JSON.stringify(data));
+    
+        history.push("/process/payment");
+    };
+    
     return (
         <Fragment>
             <CheckOutSteps activeStep={1}/> 
@@ -19,31 +51,31 @@ function ConfirmOrder() {
                         <div className="confirmShipping_box">
                             <div>
                                 <p>Name:</p>
-                                <span>Abhinav</span>
+                                <span>{user.name}</span>
                             </div>
                             <div>
                                 <p>Phone:</p>
-                                <span>8967536212</span>
+                                <span>{shippingInfo.phoneNo}</span>
                             </div>
                             <div>
                                 <p>Address:</p>
-                                <span>170,DDA SFS FLATS, sector-9, New Delhi</span>
+                                <span>{address}</span>
                             </div>
                         </div>
                     </div>
                     <div className="confirmCartItems">
                         <Typography>Your Cart Items:</Typography>
                         <div className="confirmCartItems_box">
-                            {data && 
-                                data.map((item,idx) => (
+                            {cartItems && 
+                                cartItems.map((item,idx) => (
                                     <div key={idx}>
-                                        <img src={profile}/>
-                                        <Link to={`/product/fdf23fq`}>
-                                            Product Name
-                                        </Link>
+                                        <img src={item.image}/>
+                                        <Link to={`/product/${item.product}`}>
+                                            {item.name}
+                                        </Link>{" "}
                                         <span>
-                                            quantity * price = {" "}
-                                            <b>₹385252</b>
+                                        {item.quantity} X ₹{item.price} ={" "}
+                                            <b>₹{(item.price * item.quantity).toFixed(2)}</b>
                                         </span>
                                     </div>
                                 ))
@@ -56,29 +88,31 @@ function ConfirmOrder() {
                     <div className="orderSummary">
                         <Typography>Order Summery</Typography>
                         <div>
-                        <div>
-                            <p>Subtotal:</p>
-                            <span>₹1234</span>
+                            <div>
+                                <p>Subtotal:</p>
+                                <span>₹{subtotal.toFixed(2)}</span>
+                            </div>
+                            <div>
+                                <p>Shipping Charges:</p>
+                                <span>₹{shippingCharges.toFixed(2)}</span>
+                            </div>
+                            <div>
+                                <p>GST:</p>
+                                <span>₹{tax.toFixed(2)}</span>
+                            </div>
                         </div>
-                        <div>
-                            <p>Shipping Charges:</p>
-                            <span>₹123</span>
+
+                        <div className="orderSummaryTotal">
+                            <p>
+                                <b>Total:</b>
+                            </p>
+                            <span>₹{totalPrice.toFixed(2)}</span>
                         </div>
-                        <div>
-                            <p>GST:</p>
-                            <span>₹12.3</span>
-                        </div>
-                        </div>
+
+                        <button onClick={proceedToPayment}>Proceed To Payment</button>
                     </div>
 
-                    <div className="orderSummaryTotal">
-                        <p>
-                            <b>Total:</b>
-                        </p>
-                        <span>₹1370.3</span>
-                    </div>
-
-                    <button >Proceed To Payment</button>
+                    
                 </div>
             </div>
         </Fragment>

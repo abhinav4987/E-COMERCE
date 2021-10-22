@@ -16,14 +16,17 @@
   .sidebar > a > img:hover {
     filter: drop-shadow(0 0 10px rgb(71, 181, 255));
   }
-  .sidebar a {
+  .sidebar a,
+  .sidebar span {
     text-decoration: none;
     color: rgba(0, 0, 0, 0.932);
     font: 400 1rem "Roboto";
     padding: 2rem;
     transition: all 0.5s;
   }
-  .sidebar a:hover {
+
+  .sidebar a:hover,
+  .sidebar span:hover {
     color: rgb(45, 169, 252);
     transform: scale(1.1);
   }

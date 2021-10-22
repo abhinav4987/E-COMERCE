@@ -15,21 +15,33 @@ import profile from '../../images/profile.png';
 import cover from '../../images/cover.jpg';
 import logo from '../../images/logo.png';
 import productPic from '../../images/product.jpg';
+import {addItemsToCart} from '../../redux/actions/cart.action';
+import ReviewCard from '../ReviewCard';
+import {getProductDetails, newReview} from "../../redux/actions/product.action";
 import './style.css';
 
-let product = {
-    _id: "adegwe2f",
-    name: "Product",
-    price: 23.545,
-    numOfReviews: 23456,
-    images : [profile,cover, logo,productPic],
-    description: "this product is just for website demo.This is not an actual product, please do toke buy it."
+// let product = {
+//     _id: "adegwe2f",
+//     name: "Product",
+//     price: 23.545,
+//     numOfReviews: 23456,
+//     images : [profile,cover, logo,productPic],
+//     description: "this product is just for website demo.This is not an actual product, please do toke buy it."
 
-}
+// }
 
 function ProductDetails({match}) {
     
     const dispatch = useDispatch();
+    
+    const { product, loading, error} = useSelector(
+        (state) => state.productDetails
+    );
+
+
+    
+    
+    
     const options = {
         size: "large",
         value: 4,
@@ -43,25 +55,45 @@ function ProductDetails({match}) {
     const [comment, setComment] = useState("");
 
     const increaseQuantity = () => {
-        
+        setQuantity((prevState) => setQuantity(prevState+1));
     }
 
     const decreaseQuantity = () => {
-    
+        setQuantity((prevState) => {
+            if(prevState > 2)
+            setQuantity(prevState-1)
+            else setQuantity(1);
+        });
     };
 
     const addToCartHandler = () => {
-        
+        dispatch(addItemsToCart(match.params.id, quantity));
     };
 
     const submitReviewToggle = () => {
-        
+        open ? setOpen(false) : setOpen(true);
     };
 
     const reviewSubmitHandler = () => {
-        
-    };
+        const myForm = new FormData();
 
+        myForm.set("rating", rating);
+        myForm.set("comment", comment);
+        myForm.set("productId", match.params.id);
+
+        dispatch(newReview(myForm));
+        // dispatch(getProductDetails(match.params.id));
+        setOpen(false);
+    };
+    useEffect(() => {
+        
+        dispatch(getProductDetails(match.params.id));
+    },[dispatch, match.params.id, error]);
+
+    useEffect(()=> {
+        if(open === false)
+        dispatch(getProductDetails(match.params.id));
+    },[open]);
     return (
         <Fragment>
             {false ? (
@@ -77,7 +109,7 @@ function ProductDetails({match}) {
                                             <img 
                                                 className="carousel_image"
                                                 key={i}
-                                                src={item}
+                                                src={item.url}
                                                 alt={`${i} Slide`}
                                             />
                                         ))
@@ -103,10 +135,11 @@ function ProductDetails({match}) {
                                 <div className="detailsblock_3-1">
                                 <div className="detailsblock_3-1-1">
                                     <button onClick={decreaseQuantity}>-</button>
-                                    <input readOnly type="number" value={quantity} />
+                                    <input   value={quantity}/>
                                     <button onClick={increaseQuantity}>+</button>
                                 </div>
                                 <button
+                                    type="button"
                                     disabled={product.Stock < 1 ? true : false}
                                     onClick={addToCartHandler}
                                 >
@@ -169,7 +202,7 @@ function ProductDetails({match}) {
                     <div className="reviews">
                         {product.reviews &&
                             product.reviews.map((review) => (
-                                <h4>Review</h4>
+                                <ReviewCard key={review._id} review={review} />
                         ))}
                     </div>
                     ) : (

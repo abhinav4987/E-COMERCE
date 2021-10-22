@@ -5,17 +5,18 @@ const User = require("../models/user.model");
 
 exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
     const { token } = req.cookies;
-
+    console.log("authenticating : ", token);
     if (!token) {
         return next(new ErrorHandler("Please Login to access this resource", 401));
     }
 
-    const decodedData = jwt.verify(token, process.env.JWT_SECRET);
+    const decodedData = jwt.verify(req.cookies.token, process.env.JWT_SECRET);
 
     req.user = await User.findById(decodedData.id);
 
     next();
 });
+
 
 exports.authorizeRoles = (...roles) => {
     return (req, res, next) => {

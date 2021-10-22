@@ -13,7 +13,7 @@ import { useDispatch, useSelector } from "react-redux";
 import './style.css'
 
 const UserOptions = ({user}) => {
-    // const {cartItems} = useSelector((state) => state.cart);
+    const {cartItems} = useSelector((state) => state.cart);
 
     const [open, setOpen] = useState(false);
     const history = useHistory();
@@ -26,10 +26,10 @@ const UserOptions = ({user}) => {
         {
             icon: (
                 <ShoppingCartIcon
-                style={{ color: 0 > 0 ? "tomato" : "unset" }}
+                style={{ color: cartItems.length > 0 ? "tomato" : "unset" }}
                 />
             ),
-            name: `Cart(${0})`,
+            name: `Cart(${cartItems.length})`,
             func: cart,
         },
         { icon: <ExitToAppIcon />, name: "Logout", func: logoutUser },

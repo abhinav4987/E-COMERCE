@@ -6,7 +6,7 @@ import './style.css'
 function CartItemCard({ item, deleteCartItems }) {
     return (
         <div className="CartItemCard">
-            <img src={product} alt="sa" />
+            <img src={item.image} alt="sa" />
             <div>
                 <Link to={`/product/hjve`}/>
                 <span>{`Price : ₹37832`}</span>

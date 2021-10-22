@@ -4,6 +4,7 @@ import Pagination from "react-js-pagination";
 import {Loader,ProductCard} from '../';
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
+import {getProduct} from "../../redux/actions/product.action"
 import './style.css'
 
 const categories = [
@@ -25,7 +26,7 @@ function Products({match}) {
     const dispatch = useDispatch();
 
     const [currentPage, setCurrentPage] = useState(1);
-    const [price, setPrice] = useState([0, 25000]);
+    const [price, setPrice] = useState([0, 250000000]);
     const [category, setCategory] = useState("");
 
     const [ratings, setRatings] = useState(0);
@@ -38,6 +39,7 @@ function Products({match}) {
         resultPerPage,
         // filteredProductsCount,
     } = useSelector((state) => state.products);
+
 
     const keyword = match.params.keyword;
 
@@ -52,13 +54,13 @@ function Products({match}) {
     // let count = filteredProductsCount;
 
     useEffect(() => {
-        // dispatch(getProduct(keyword, currentPage, price, category, ratings));
-    }, [dispatch, keyword, currentPage, price, category, ratings, alert, error]);
+        dispatch(getProduct(keyword, currentPage, price, category, ratings));
+    }, [dispatch, keyword, currentPage, price, category, ratings, error]);
 
 
     return (
         <Fragment>
-            {!loading ? (
+            {loading ? (
 
                 <Loader />
             ) : (
@@ -66,9 +68,9 @@ function Products({match}) {
                     <h2 className="productsHeading">Products</h2>
 
                     <div className="products">
-                        {data && 
-                            data.map((product) => (
-                                <ProductCard  />
+                        {products &&  
+                            products.map((product) => (
+                                <ProductCard  product={product}/>
                             ))
                         }
                     </div>

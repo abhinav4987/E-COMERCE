@@ -16,7 +16,12 @@ process.on("uncaughtException", (err) => {
 
 
 // middlewares
-server.use(cors());
+server.use(cors(
+    {
+        credentials: true,
+        origin:true
+    }
+));
 server.use(express.json());
 server.use(cookieParser());
 server.use(express.urlencoded({ extended: true }));
@@ -35,10 +40,13 @@ cloudinary.config({
 const PORT = process.env.PORT || 5001
 const user = require('./routes/user.routes');
 const product  = require('./routes/product.routes');
-
+const payment = require("./routes/payment.routes");
+const order = require("./routes/order.routes");
 
 server.use("/api/v1",user);
 server.use("/api/v1",product);
+server.use("/api/v1",payment);
+server.use("/api/v1",order);
 
 let runninServer = server.listen(PORT, () => {
     console.log("Server is running!");

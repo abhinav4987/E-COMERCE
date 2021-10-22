@@ -32,9 +32,10 @@ import {
 } from "../actionTypes";
 
 
+
 const baseUrl = "http://localhost:5001"
 
-export const getProduct = (keyword = "", currentPage = 1, price = [0, 25000], category, ratings = 0) => async (dispatch) => {
+export const getProduct = (keyword = "", currentPage = 1, price = [0, 250000000000000], category, ratings = 0) => async (dispatch) => {
     
     console.log("getting product");
     try {
@@ -48,13 +49,14 @@ export const getProduct = (keyword = "", currentPage = 1, price = [0, 25000], ca
         }
 
         const { data } = await axios.get(baseUrl + link);
-
+        console.log("products : ", data);
         dispatch({
             type: ALL_PRODUCT_SUCCESS,
             payload: data,
         });
 
     } catch (error) {
+        console.log("error : ",error);
         dispatch({
             type: ALL_PRODUCT_FAIL,
             payload: error.response.data.message,
@@ -64,11 +66,20 @@ export const getProduct = (keyword = "", currentPage = 1, price = [0, 25000], ca
 
 
 
+
 export const getAdminProduct = () => async (dispatch) => {
+    
     try {
         dispatch({ type: ADMIN_PRODUCT_REQUEST });
-    
-        const { data } = await axios.get("/api/v1/admin/products");
+        const config = {
+            headers: { 
+                "Content-Type": "application/json",
+                "crossDomain": true
+            },
+            "withCredentials": true,
+        };
+
+        const { data } = await axios.get(baseUrl +  "/api/v1/admin/products",config);
     
         dispatch({
             type: ADMIN_PRODUCT_SUCCESS,
@@ -80,7 +91,9 @@ export const getAdminProduct = () => async (dispatch) => {
             payload: error.response.data.message,
         });
     }
+
 }
+
 
 
 export const createProduct = (productData) => async (dispatch) => {
@@ -88,7 +101,11 @@ export const createProduct = (productData) => async (dispatch) => {
         dispatch({ type: NEW_PRODUCT_REQUEST });
     
         const config = {
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json",
+                "crossDomain": true
+            },
+            "withCredentials": true,
         };
     
         const { data } = await axios.post(
@@ -108,16 +125,25 @@ export const createProduct = (productData) => async (dispatch) => {
         });
     }
 };
+
+
+    
+
+
 export const updateProduct = (id, productData) => async (dispatch) => {
     try {
         dispatch({ type: UPDATE_PRODUCT_REQUEST });
     
         const config = {
-            headers: { "Content-Type": "application/json" },
+            headers: { 
+                "Content-Type": "application/json"
+                ,"crossDomain": true
+            },
+            "withCredentials": true,
         };
-    
+
         const { data } = await axios.put(
-            `/api/v1/admin/product/${id}`,
+            baseUrl + `/api/v1/admin/product/${id}`,
             productData,
             config
         );
@@ -135,12 +161,21 @@ export const updateProduct = (id, productData) => async (dispatch) => {
 };
 
 
+    
+
+
 // Delete Product
 export const deleteProduct = (id) => async (dispatch) => {
     try {
         dispatch({ type: DELETE_PRODUCT_REQUEST });
-    
-        const { data } = await axios.delete(`/api/v1/admin/product/${id}`);
+        const config = {
+            headers: { 
+                "Content-Type": "application/json"
+                ,"crossDomain": true
+            },
+            "withCredentials": true,
+        };
+        const { data } = await axios.delete(baseUrl + `/api/v1/admin/product/${id}`,config);
     
         dispatch({
             type: DELETE_PRODUCT_SUCCESS,
@@ -154,13 +189,22 @@ export const deleteProduct = (id) => async (dispatch) => {
     }
 };
 
+    
+
 // Get Products Details
 export const getProductDetails = (id) => async (dispatch) => {
     try {
         dispatch({ type: PRODUCT_DETAILS_REQUEST });
-    
-        const { data } = await axios.get(`/api/v1/product/${id}`);
-    
+        console.log("product request : ", id);
+        const config = {
+            headers: { 
+                "Content-Type": "application/json"
+                ,"crossDomain": true
+            },
+            "withCredentials": true,
+        };
+        const { data } = await axios.get(baseUrl + `/api/v1/product/${id}`, config);
+        
         dispatch({
             type: PRODUCT_DETAILS_SUCCESS,
             payload: data.product,
@@ -172,3 +216,86 @@ export const getProductDetails = (id) => async (dispatch) => {
         });
     }
 };
+
+export const newReview = (reviewData) => async (dispatch) => {
+    try {
+      dispatch({ type: NEW_REVIEW_REQUEST });
+  
+      const config = {
+        headers: { 
+            "Content-Type": "application/json"
+            ,"crossDomain": true
+        },
+        "withCredentials": true,
+    };
+  
+      const { data } = await axios.put(baseUrl + `/api/v1/review`, reviewData, config);
+  
+      dispatch({
+        type: NEW_REVIEW_SUCCESS,
+        payload: data.success,
+      });
+    } catch (error) {
+      dispatch({
+        type: NEW_REVIEW_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+  
+
+  export const getAllReviews = (id) => async (dispatch) => {
+    try {
+      dispatch({ type: ALL_REVIEW_REQUEST });
+      const config = {
+        headers: { 
+            "Content-Type": "application/json"
+            ,"crossDomain": true
+        },
+        "withCredentials": true,
+    };
+      const { data } = await axios.get(baseUrl + `/api/v1/reviews?id=${id}`, config);
+  
+      dispatch({
+        type: ALL_REVIEW_SUCCESS,
+        payload: data.reviews,
+      });
+    } catch (error) {
+      dispatch({
+        type: ALL_REVIEW_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+  
+
+  export const deleteReviews = (reviewId, productId) => async (dispatch) => {
+    try {
+      dispatch({ type: DELETE_REVIEW_REQUEST });
+      const config = {
+        headers: { 
+            "Content-Type": "application/json"
+            ,"crossDomain": true
+        },
+        "withCredentials": true,
+    };
+      const { data } = await axios.delete(baseUrl + 
+        `/api/v1/reviews?id=${reviewId}&productId=${productId}`, config
+      );
+  
+      dispatch({
+        type: DELETE_REVIEW_SUCCESS,
+        payload: data.success,
+      });
+    } catch (error) {
+      dispatch({
+        type: DELETE_REVIEW_FAIL,
+        payload: error.response.data.message,
+      });
+    }
+  };
+  
+
+  export const clearErrors = () => async (dispatch) => {
+    dispatch({ type: CLEAR_ERRORS });
+  };

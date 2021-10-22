@@ -9,6 +9,7 @@ import './style.css'
 const data = [0,0,0,0,0,0,0,0,0,0,0,0,];
 function Home() {
     
+
     // const alert = useAlert();
     const dispatch = useDispatch();
     const { loading, error, products } = useSelector((state) => state.products);
@@ -39,8 +40,8 @@ function Home() {
                     <h2 className="home-featured">Featured Products</h2>
                     <div className="home-product-Container">
                         {products && 
-                            data.map((info)=> (
-                                <ProductCard />
+                            products.map((info)=> (
+                                <ProductCard product={info} />
                             ))
                         }
                     </div>

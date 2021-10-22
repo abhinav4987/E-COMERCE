@@ -14,13 +14,13 @@ router.route("/password/reset/:token").put(userController.resetPassword);
 
 router.route("/logout").get(userController.logout);
 
-router.route("/me").get(userController.getUserDetails);
+router.route("/me/:id").get(userController.getUserDetails);
 
 router.route("/password/update").put(userController.updatePassword);
 
-router.route("/me/update").put(userController.updateProfile);
+router.route("/me/update").put(isAuthenticatedUser, userController.updateProfile);
 
-router.route("/admin/users").get();
+router.route("/admin/users").get(isAuthenticatedUser, authorizeRoles("admin"),userController.getAllUser);
 
 
 router.route("/admin/user/:id")

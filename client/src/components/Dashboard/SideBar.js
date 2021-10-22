@@ -1,4 +1,4 @@
-import React from "react";
+import React, {Fragment} from "react";
 import logo from '../../images/profile.png'
 import { Link } from "react-router-dom";
 import { TreeView, TreeItem } from "@material-ui/lab";
@@ -26,13 +26,13 @@ const Sidebar = () => {
                     <DashboardIcon /> Dashboard
                 </p>
             </Link>
-            <Link >
+            <span>
                 <TreeView
                     defaultCollapseIcon={<ExpandMoreIcon />}
                     defaultExpandIcon={<ImportExportIcon />}
                 >
                     <TreeItem nodeId="1" label="Products">
-                    <Link to="/">
+                    <Link to="/admin/products">
                         <TreeItem nodeId="2" label="All" icon={<PostAddIcon />} />
                     </Link>
         
@@ -41,14 +41,14 @@ const Sidebar = () => {
                     </Link>
                     </TreeItem>
                 </TreeView>
-            </Link>
-            <Link to="/">
+            </span>
+            <Link to="/admin/orders">
                 <p>
                     <ListAltIcon />
                     Orders
                 </p>
             </Link>
-            <Link to="/">
+            <Link to="/admin/users">
                 <p>
                     <PeopleIcon />
                     Users

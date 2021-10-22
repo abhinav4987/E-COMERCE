@@ -7,22 +7,24 @@ import axios from "axios";
 
 const baseUrl = "http://localhost:5001"
 
+
 export const addItemsToCart = (id, quantity) => async (dispatch, getState) => {
-    const {data} = await axios.get(`/api/vi/product/${id}`);
+    const {data} = await axios.get(baseUrl + `/api/v1/product/${id}`);
+    if(quantity > 0){
+        dispatch({
+            type: ADD_TO_CART,
+            payload: {
+                product: data.product._id,
+                name: data.product.name,
+                price: data.product.price,
+                image: data.product.images[0].url,
+                stock: data.product.Stock,
+                quantity,
+            }
+        });
 
-    dispatch({
-        type: ADD_TO_CART,
-        payload: {
-            product: data.product._id,
-            name: data.product.name,
-            price: data.product.price,
-            image: data.product.images[0].url,
-            stock: data.product.Stock,
-            quantity,
-        }
-    });
-
-    localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+        window.sessionStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+    }
 };
 
 export const removeItemsFromCart = (id) => async (dispatch, getState) => {
@@ -31,7 +33,7 @@ export const removeItemsFromCart = (id) => async (dispatch, getState) => {
         payload: id,
     });
     
-    localStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
+    window.sessionStorage.setItem("cartItems", JSON.stringify(getState().cart.cartItems));
 }
 
 export const saveShippingInfo = (data) => async (dispatch) => {
@@ -40,5 +42,5 @@ export const saveShippingInfo = (data) => async (dispatch) => {
         payload: data,
     });
 
-    localStorage.setItem("shippingInfo", JSON.stringify(data));
+    window.sessionStorage.setItem("shippingInfo", JSON.stringify(data));
 }

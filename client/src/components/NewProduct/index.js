@@ -8,11 +8,14 @@ import DescriptionIcon from "@material-ui/icons/Description";
 import StorageIcon from "@material-ui/icons/Storage";
 import SpellcheckIcon from "@material-ui/icons/Spellcheck";
 import AttachMoneyIcon from "@material-ui/icons/AttachMoney";
+import { createProduct } from '../../redux/actions/product.action'
+
 import Sidebar from '../Dashboard/SideBar';
 import './style.css'
 
 function NewProduct() {
-    
+    const dispatch = useDispatch();
+
 
     const [name, setName] = useState("");
     const [price, setPrice] = useState(0);
@@ -32,6 +35,46 @@ function NewProduct() {
         "SmartPhones"
     ]
 
+    const createProductSubmitHandler = (e) => {
+        e.preventDefault();
+        // console.log(name," ",price," ",description," ",category," ",Stock);
+        let newForm = new FormData();
+
+        newForm.set("name",name);
+        newForm.set("price",price);
+        newForm.set("description",description);
+        newForm.set("category",category);
+        newForm.set("Stock",Stock);
+        
+        images.forEach((image) => {
+            newForm.append("images", image);
+        });
+        console.log(newForm);
+        dispatch(createProduct(newForm))
+    }
+
+    const createProductImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        console.log(e.target.files);
+        setImages([]);
+        setImagesPreview([]);
+
+        files.forEach((file) => {
+            const reader = new FileReader();
+
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                setImagesPreview((old) => [...old, reader.result]);
+                setImages((old) => [...old, file]);
+                }
+            };
+
+            reader.readAsDataURL(file);
+            console.log(reader);
+        });
+        // setImages((old) => [...old, files]);
+        console.log("new images : ",images);
+    }
 
     return (
         <Fragment>
@@ -41,6 +84,7 @@ function NewProduct() {
                     <form
                         className="newProduct_form"
                         encType="multipart/form-data"
+                        onSubmit={createProductSubmitHandler}
                     >
                         <h1>Create Product </h1>
                         <div>
@@ -96,20 +140,22 @@ function NewProduct() {
                                 type="file"
                                 name="avatar"
                                 accept="image/*"
-                                // onChange={createProductImagesChange}
+                                onChange={createProductImageChange}
                                 multiple
                             />
                         </div>
 
                         <div id="createProduct_form_image">
-                            
+                            {imagesPreview.map((image, index) => (
+                                <img key={index} src={image} alt="preview" />
+                            ))}
                         </div>
 
                         <Button 
                             id="createProduct_btn"
                             type="submit"
                             
-                        ></Button>
+                        > Create</Button>
                     </form>
                 </div>
             </div>

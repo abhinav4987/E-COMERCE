@@ -27,7 +27,9 @@
 
 .profile_container > div:first-child > img {
     width: 20vmax;
-    border-radius: 100%;
+    height: 20vmax;
+    object-fit: contain;
+    border-radius: 1000rem;
     transition: all 0.5s;
 }
 
@@ -70,7 +72,7 @@
     width: 60%;
 }
 
-.profile_container > div:last-child > div:last-child > p {
+.profile_container > div:last-child > div:last-child > a {
     border: none;
     background-color: rgba(68, 68, 68, 0.644);
     font: 400 1vmax "Roboto";
@@ -82,7 +84,7 @@
     margin: 1vmax 0;
 }
 
-.profile_container > div:last-child > div:last-child > p:hover{
+.profile_container > div:last-child > div:last-child > a:hover{
     background-color: rgb(31, 31, 31);
 }
 

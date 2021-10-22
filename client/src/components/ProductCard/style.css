@@ -43,3 +43,24 @@
 
     transform: translateY(-1vmax);
 }
+
+@media screen and (max-width: 1200px) {
+
+    .productCard > p {
+        font-size: 1.7vmax;
+      }
+    
+      .productCard > div {
+        margin: 0vmax;
+        display: block;
+      }
+    
+      .productCard > span {
+        font-size: 1.5vmax;
+      }
+    
+      .productCard > div > span {
+        margin: 0 0.5vmax;
+        font: 300 1vmax "Roboto";
+      }
+}
