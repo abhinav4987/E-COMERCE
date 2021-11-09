@@ -1,7 +1,7 @@
 
 # E-COMERCE
 
-A MERN application to bring your businees online, i.e. an ecomerce platform.
+A MERN application to bring your business online, i.e. an ecommerce platform.
 
 
 
@@ -13,11 +13,11 @@ A MERN application to bring your businees online, i.e. an ecomerce platform.
 
 ## Features
 
-- basic functionalities of a ecomerce website like, buying products, reviewing them.
+- basic functionalities of a ecommerce website like, buying products, reviewing them.
 - search functionality for products.
 - payment feature powered by stripe.
 - filter for products based on categories, price and rating.
-- the admin(seller) has a funtionality to edit handle orders, add products and modify products and users.
+- the admin(seller) has a funtionality to edit and handle orders, add products and modify products and users.
 - using cloudinary to store images.
 (To see a walkthrough of the app , do watch this youtube video.)
 - error handling in the backend code
