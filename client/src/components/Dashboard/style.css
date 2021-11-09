@@ -77,3 +77,24 @@
     width: 30vmax;
     margin: auto;
 }
+
+@media screen and (max-width: 600px) {
+    .dashboard {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard_main {
+        border-left: none;
+    }
+
+    .dashboard_summary > div > p {
+        margin: 0;
+    }
+
+    .dashboard_summary_box2 > a {
+        padding: 0.5rem;
+        margin: 1rem;
+        font: 300 0.9rem "Roboto";
+    }
+}
+

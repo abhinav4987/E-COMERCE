@@ -1,8 +1,10 @@
 import React from 'react'
 import {Link} from "react-router-dom"
 import { Rating } from "@material-ui/lab";
+import numeral from 'numeral'
 // import product from '../../images/product.jpg';
 import './style.css';
+
 
 
 function index({product}) {
@@ -24,7 +26,7 @@ function index({product}) {
                     ({product.numOfReviews})
                 </span>
             </div>
-            <span>{`₹${product.price}`}</span>
+            <span>{`₹${numeral(product.price).format('0,0.0')}`}</span>
         </Link>
     )
 }

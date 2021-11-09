@@ -27,7 +27,10 @@ import {
   OrderDetails,
   OrderList,
   UserList,
-  ProcessOrder
+  ProcessOrder,
+  UpdatePassword,
+  UpdateUser,
+  ProductReview,
 } from './components'
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js"
@@ -44,16 +47,20 @@ function App() {
   const [stripeApiKey, setStripeApiKey] = useState("");
 
   async function getStripeApiKey() {
-    const config = {
-      headers: { 
-          "Content-Type": "application/json"
-          ,"crossDomain": true
-      },
-      "withCredentials": true,
-    };
-    const { data } = await axios.get(baseUrl + "/api/v1/stripeapikey", config);
-
-    setStripeApiKey(data.stripeApiKey);
+    try {
+      const config = {
+        headers: { 
+            "Content-Type": "application/json"
+            ,"crossDomain": true
+        },
+        "withCredentials": true,
+      };
+      const { data } = await axios.get(baseUrl + "/api/v1/stripeapikey", config);
+  
+      setStripeApiKey(data.stripeApiKey);
+    } catch {
+      setStripeApiKey("");
+    }
   }
 
   window.addEventListener("contextmenu", (e) => e.preventDefault());
@@ -93,6 +100,8 @@ function App() {
 
         <ProtectedRoute exact path="/orders" component={MyOrders} />
         <ProtectedRoute exact path="/order/:id" component={OrderDetails} />
+        <ProtectedRoute exact path="/password/update" component={UpdatePassword} />
+        
         <ProtectedRoute 
           isAdmin={true}
           path="/admin/dashboard"
@@ -135,7 +144,12 @@ function App() {
         <ProtectedRoute
           isAdmin={true}
           path="/admin/user/:id"
-          component={UserList}
+          component={UpdateUser}
+        />
+        <ProtectedRoute
+          isAdmin={true}
+          path="/admin/reviews"
+          component={ProductReview}
         />
       </Switch>
       <Footer />

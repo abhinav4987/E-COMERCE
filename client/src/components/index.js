@@ -29,3 +29,6 @@ export {default as OrderDetails} from './OrderDetails'
 export {default as OrderList} from './OrderList'
 export {default as UserList} from './UserList'
 export {default as ProcessOrder} from './ProcessOrder';
+export {default as UpdatePassword} from './UpdatePassword'
+export {default as UpdateUser} from './UpdateUser'
+export {default as ProductReview} from './ProductReviews'

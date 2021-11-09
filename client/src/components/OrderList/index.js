@@ -75,6 +75,7 @@ function OrderList({history}) {
     
     const deleteOrderHandler = (id) => {
         dispatch(deleteOrder(id));
+        dispatch(getAllOrder());
     };
     
     orders &&

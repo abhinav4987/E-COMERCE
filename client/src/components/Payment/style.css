@@ -59,3 +59,45 @@
 .paymentForm_btn:hover {
     background-color: rgb(46, 152, 179);
 }
+
+@media screen and (max-width: 600px) {
+    .paymentForm {
+      width: 90%;
+    }
+  
+    .paymentForm > p {
+      font: 400 8vw "Roboto";
+      padding: 4vw 0;
+      width: 60%;
+    }
+  
+    .paymentForm > div {
+      margin: 10vw 0;
+    }
+  
+    .paymentInput {
+      padding: 4vw 10vw;
+    }
+  
+    .paymentForm > div > svg {
+      font-size: 6vw;
+    }
+  
+    .paymentFormBtn {
+      font: 300 4vw "Roboto";
+      padding: 4vw;
+    }
+
+    .paymentForm_btn {
+        border: none;
+        background-color: rgb(71, 218, 255);
+        color: white;
+        font: 400 2.3vmax "Roboto";
+        width: 100%;
+        padding: 1.5vmax;
+        cursor: pointer;
+        transition: all 0.5s;
+        outline: none;
+    }
+}
+  

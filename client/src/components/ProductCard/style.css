@@ -1,6 +1,7 @@
 .productCard {
 
     width: 14vmax;
+    height: auto;
     display: flex;
     flex-direction: column;
     text-decoration: none;
@@ -15,6 +16,7 @@
 
 .productCard > img {
     width: 14vmax;
+    /* object-fit: contain; */
 }
 
 .productCard > div {
@@ -44,6 +46,8 @@
     transform: translateY(-1vmax);
 }
 
+
+
 @media screen and (max-width: 1200px) {
 
     .productCard > p {
@@ -63,4 +67,32 @@
         margin: 0 0.5vmax;
         font: 300 1vmax "Roboto";
       }
+}
+
+@media screen and (max-width: 600px) {
+  
+  .productCard {
+    width: 20vmax;
+  }
+  .productCard > img {
+    width: 20vmax;
+  }
+  
+  .productCard > p {
+    font-size: 1.9vmax;
+  }
+
+  .productCard > div {
+    margin: 0vmax;
+    display: block;
+  }
+
+  .productCard > span {
+    font-size: 1.6vmax;
+  }
+
+  .productCard > div > span {
+    margin: 0 0.5vmax;
+    font: 300 1vmax "Roboto";
+  }
 }

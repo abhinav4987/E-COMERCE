@@ -21,3 +21,12 @@
     color: rgba(0, 0, 0, 0.445);
     font: 300 0.8vmax cursive;
   }
+
+  @media screen and (max-width: 1050px)  {
+    .reviewCard > p {
+        font: 600 3vw "Roboto";
+    }
+    .reviewCardComment {
+        font: 400 3.2vw "Roboto";
+    }
+}

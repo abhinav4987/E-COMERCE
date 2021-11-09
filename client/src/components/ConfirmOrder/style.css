@@ -135,6 +135,9 @@
     .confirmOrder {
         margin-bottom: 3rem;
     }
+    .confirmCartItems_box > div > img {
+        width: 5vmax;
+    }
 }
 
 @media screen and (max-width: 850px) {
@@ -179,7 +182,9 @@
     .confirmCartItems_box > div > span {
         font: 100 2vw "Roboto";
     }
-
+    .confirmCartItems_box > div > img {
+        width: 6.5vmax;
+    }
     .orderSummary > p {
         font: 400 4vw "Roboto";
         padding: 4vw;
@@ -200,6 +205,7 @@
         font: 400 2vw "Roboto";
     }
 }
+
 
 
 

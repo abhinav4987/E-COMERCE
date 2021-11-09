@@ -35,6 +35,7 @@ const newOrder = catchAsyncErrors(async (request, response, next) => {
 });
 
 
+
 const getSingleOrder = catchAsyncErrors(async (request, response, next) => {
 
     const order = await Order.findById(request.params.id).populate(
@@ -120,7 +121,7 @@ const deleteOrder = catchAsyncErrors(async (request, response, next) => {
     const order = await Order.findById(request.params.id);
 
     if (!order) {
-        return next(new ErrorHander("Order not found with this Id", 404));
+        return next(new ErrorHandler("Order not found with this Id", 404));
     }
 
     await order.remove();

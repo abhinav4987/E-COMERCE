@@ -114,10 +114,11 @@ export const loadUser = () => async (dispatch,getState) => {
     }
 };
 
-export const logout = () => async (dispatch) => {
+export const logout = () => async (dispatch,getState) => {
     try {
         await axios.get(baseUrl +  `/api/v1/logout`);
         dispatch({ type: LOGOUT_SUCCESS });
+        window.sessionStorage.setItem("user", JSON.stringify(getState().user.user));
     } catch (error) {
         dispatch({ type: LOGOUT_FAIL, payload: error.response.data.message });
     }

@@ -13,10 +13,25 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
-    align-items: center;
+    /* align-items: left; */
     padding: 2vmax;
     box-sizing: border-box;
     border: 1px solid white;
+}
+
+.leftside {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.productdetails_main > div:nth-child(1) {
+    display: flex;
+    align-items: center;
+}
+.productdetails_main > div:nth-child(2) {
+    display: flex;
+    align-items: left;
 }
 
 .detailsblock_1 > h2{
@@ -157,6 +172,9 @@
 }
 .reviews {
     display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
     overflow: auto;
 }
 
@@ -166,3 +184,98 @@
     color: rgba(0, 0, 0, 0.548);
 }
   
+
+
+@media screen and (max-width: 1050px) {
+    .ProductDetails {
+        flex-direction: column;
+        height: unset;
+    }
+    .productdetails_main > div:nth-child(2) {
+        /* display: flex; */
+        align-items: center;
+    }
+    .ProductDetails > div:last-child {
+        align-items: center;
+    }
+
+    .detailsblock_1 > h2 {
+        font-size: 2.8vmax;
+        text-align: center;
+    }
+  
+    .detailsblock_1 > p {
+        text-align: center;
+        font-size: 1vmax;
+    }
+  
+    .detailsblock_2 {
+        justify-content: center;
+    }
+    .detailsblock_2 > span {
+        font-size: 1.5vmax;
+    }
+  
+    .detailsblock_3 > h1 {
+        font: 700 3vmax "Franklin Gothic Medium";
+        text-align: center;
+    }
+    .detailsblock_3 > button {
+        font: 400 2vmax "Roboto";
+    }
+    .detailsblock_3-1 {
+        flex-direction: column;
+    }
+  
+    .detailsblock_3-1-1 {
+        padding: 2vmax 0;
+    }
+    .detailsblock-3-1-1 > button {
+        padding: 1.2vmax;
+        /* font-size: 2; */
+        width: 4vmax;
+    }
+  
+    .detailsblock_3-1-1 > input {
+        padding: 1.5vmax;
+        width: 3vmax;
+        font: 400 1.8vmax "Roboto";
+    }
+  
+    .detailsblock_3-1 > button:last-child {
+        font: 500 1.7vmax "Roboto";
+        padding: 1.5vmax;
+        width: 20vmax;
+        margin: 3vmax 0;
+    }
+  
+    .detailsblock_3 > p {
+        padding: 2.5vmax 0;
+        text-align: center;
+        font: 400 2vmax "Roboto";
+    }
+
+    .detailsblock_4 {
+        font: 500 2.5vmax sans-serif;
+    }
+
+    .detailsblock_4 > p {
+        font: 300 1.8vmax sans-serif;
+    }
+
+    .submitReview {
+        font: 500 1.7vmax "Roboto";
+        padding: 1.5vmax;
+        width: 20vmax;
+        margin: 3vmax 0;
+    }
+
+   
+}
+
+@media screen and (max-width: 1050px)  {
+    .productdetails_main{
+        flex-direction: column;
+    }
+
+}

@@ -20,7 +20,7 @@ export const cartReducer = (
             const isItemExist = state.cartItems.find(
                 (i) => i.product === item.product
             );
-
+                
             if (isItemExist) {
                 
                 console.log("exists");
@@ -28,7 +28,7 @@ export const cartReducer = (
                 return {
                 ...state,
                 cartItems: state.cartItems.map((i) =>
-                    i.product === isItemExist.product ? {...item, quantity: item.quantity + 1} : i
+                    i.product === isItemExist.product ? {...item, quantity: item.quantity} : i
                 ),
                 };
             } else {

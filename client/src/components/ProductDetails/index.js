@@ -85,6 +85,7 @@ function ProductDetails({match}) {
         // dispatch(getProductDetails(match.params.id));
         setOpen(false);
     };
+
     useEffect(() => {
         
         dispatch(getProductDetails(match.params.id));
@@ -118,7 +119,7 @@ function ProductDetails({match}) {
                         </div>
 
 
-                        <div>
+                        <div className="leftside">
                             <div className="detailsblock_1">
                                 <h2>{product.name}</h2>
                                 <p>Product #{product._id}</p>
@@ -163,8 +164,8 @@ function ProductDetails({match}) {
                         <button onClick={submitReviewToggle} className="submitReview">
                             Submit Review
                         </button>
+                        </div>
                     </div>
-                </div>
 
                 <h3 className="reviewsHeading">REVIEWS</h3>
                 <Dialog

@@ -59,7 +59,7 @@ export const getProduct = (keyword = "", currentPage = 1, price = [0, 2500000000
         console.log("error : ",error);
         dispatch({
             type: ALL_PRODUCT_FAIL,
-            payload: error.response.data.message,
+            payload: error?.response?.data.message,
         });
     }
 };

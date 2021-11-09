@@ -1,5 +1,6 @@
 import React, {useState, Fragment} from 'react'
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 // import { clearErrors, createProduct } from "../../actions/productAction";
 import { useAlert } from "react-alert";
 import { Button } from "@material-ui/core";
@@ -15,6 +16,7 @@ import './style.css'
 
 function NewProduct() {
     const dispatch = useDispatch();
+    let history = useHistory();
 
 
     const [name, setName] = useState("");
@@ -51,6 +53,7 @@ function NewProduct() {
         });
         console.log(newForm);
         dispatch(createProduct(newForm))
+        history.push("/admin/dashboard")
     }
 
     const createProductImageChange = (e) => {

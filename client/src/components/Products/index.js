@@ -5,6 +5,7 @@ import {Loader,ProductCard} from '../';
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import {getProduct} from "../../redux/actions/product.action"
+import numeral from 'numeral'
 import './style.css'
 
 const categories = [
@@ -83,7 +84,7 @@ function Products({match}) {
                                 valueLabelDisplay="auto"
                                 aria-labelledby="range-slider"
                                 min={0}
-                                max={25000}
+                                max={250000}
                             />
                         
                         <Typography>Categories</Typography>
@@ -144,3 +145,4 @@ function Products({match}) {
 }
 
 export default Products
+

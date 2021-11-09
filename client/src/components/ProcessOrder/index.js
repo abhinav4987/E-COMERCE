@@ -78,7 +78,7 @@ function ProcessOrder({match, history}) {
                             </span>
                             </div>
                         </div>
-
+                            <div className="divider_processOrder"></div>
                         <Typography variant="h5">Payment</Typography>
                         <div className="orderDetailsContainerBox">
                             <div>
@@ -102,7 +102,7 @@ function ProcessOrder({match, history}) {
                             <span>{order.totalPrice && order.totalPrice}</span>
                             </div>
                         </div>
-
+                            <div className="divider_processOrder"></div>
                         <Typography variant="h5">Order Status</Typography>
                         <div className="orderDetailsContainerBox">
                             <div>
@@ -118,6 +118,7 @@ function ProcessOrder({match, history}) {
                             </div>
                         </div>
                         </div>
+                            <div className="divider_processOrder"></div>
                         <div className="confirmCartItems">
                         <Typography variant="h5">Your Cart Items:</Typography>
                         <div className="confirmCartItemsContainer">

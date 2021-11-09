@@ -88,3 +88,47 @@
     background-color: rgb(31, 31, 31);
 }
 
+@media screen and (max-width: 600px) {
+    .profile_container {
+        flex-direction: column;
+    }
+  
+    .profile_container > div:first-child > h1 {
+        font: 500 3.2vmax "Roboto";
+        transform: translateY(-2vmax);
+    }
+  
+    .profile_container > div:first-child > a {
+        font: 400 1.7vmax "Roboto";
+        padding: 1vmax;
+    }
+  
+    .profile_container > div:last-child {
+        text-align: center;
+        align-items: center;
+    }
+  
+    .profile_container > div:last-child > div > h4 {
+        font: 400 2.5vmax "Roboto";
+    }
+  
+    .profile_container > div:last-child > div > p {
+        font: 400 2vmax "Roboto";
+        margin: 0.5vmax 0;
+    }
+
+    .profile_container > div:last-child > div:last-child {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* justify-content: right; */
+    }
+  
+    .profile_container > div:last-child > div:last-child > a {
+        font: 400 1.8vmax "Roboto";
+        padding: 1vmax;
+        margin: 2vmax 0;
+        width: 100%;
+    }
+  }

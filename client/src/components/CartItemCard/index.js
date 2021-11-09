@@ -16,4 +16,6 @@ function CartItemCard({ item, deleteCartItems }) {
     )
 }
 
+
+
 export default CartItemCard

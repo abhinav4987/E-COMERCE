@@ -3,14 +3,32 @@ import {Loader} from '../';
 import { useDispatch, useSelector } from "react-redux";
 import LockOpenIcon from "@material-ui/icons/LockOpen";
 import LockIcon from "@material-ui/icons/Lock";
+import{resetPassword} from '../../redux/actions/user.action'
 
-
-function ResetPassword() {
+function ResetPassword({match}) {
     const dispatch = useDispatch();
-
+    
+    const { error, success, loading } = useSelector(
+        (state) => state.forgotPassword
+    );
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
     
+    const resetPasswordSubmit = (e) => {
+        e.preventDefault();
+    
+        const myForm = new FormData();
+    
+        myForm.set("password", password);
+        myForm.set("confirmPassword", confirmPassword);
+    
+        dispatch(resetPassword(match.params.token, myForm));
+    };
+
+    // useEffect(() => {
+
+    // }, [dispatch, error, alert, history, success]);
+
     return (
         <Fragment >
             {

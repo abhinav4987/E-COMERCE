@@ -70,6 +70,8 @@
 
 #updateProfile_image > img {
     width: 3vmax;
+    /* height: 4vmax; */
+    object-fit: contain;
     border-radius: 100%;
     margin: 1vmax;
 }
@@ -86,7 +88,7 @@
     height: 5vh;
     border: none;
     margin: 0%;
-    font: 400 0.8vmax cursive;
+    font: 400 0.8vmax "Roboto";
     transition: all 0.5s;
     padding: 0 1vmax;
     color: rgba(0, 0, 0, 0.623);

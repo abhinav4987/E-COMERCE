@@ -16,7 +16,7 @@ router.route("/logout").get(userController.logout);
 
 router.route("/me/:id").get(userController.getUserDetails);
 
-router.route("/password/update").put(userController.updatePassword);
+router.route("/password/update").put(isAuthenticatedUser, userController.updatePassword);
 
 router.route("/me/update").put(isAuthenticatedUser, userController.updateProfile);
 
@@ -24,8 +24,8 @@ router.route("/admin/users").get(isAuthenticatedUser, authorizeRoles("admin"),us
 
 
 router.route("/admin/user/:id")
-    .get()
-    .put()
-    .delete()
+    .get(isAuthenticatedUser, authorizeRoles("admin"),userController.getSingleUser)
+    .put(isAuthenticatedUser, authorizeRoles("admin"),userController.updateUserRole)
+    .delete(isAuthenticatedUser, authorizeRoles("admin"),userController.delteUser)
 
 module.exports = router;

@@ -128,8 +128,37 @@ const forgotPassword = catchAsyncErrors( async (request, response, next) => {
 })
 
 const resetPassword = catchAsyncErrors( async (request, response, next) => {
+    const resetPasswordToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+    
+    const user = await User.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now() },
+    });
 
-})
+    if (!user) {
+        return next(
+            new ErrorHander(
+                "Reset Password Token is invalid or has been expired",
+                400
+            )
+        );
+    }
+
+    if (req.body.password !== req.body.confirmPassword) {
+        return next(new ErrorHander("Password does not password", 400));
+    }
+
+    user.password = req.body.password;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+
+    await user.save();
+
+    sendToken(user, 200, res);
+});
 
 const getUserDetails = catchAsyncErrors( async (request, response, next) => {
     
@@ -144,9 +173,27 @@ const getUserDetails = catchAsyncErrors( async (request, response, next) => {
 })
 
 
-const updatePassword = catchAsyncErrors( async (request, response, next) => {
+const updatePassword = catchAsyncErrors(async(request, response, next) => {
+    
+    const user = await User.findById(request.user.id).select("+password");
 
-})
+    const isPasswordMatched = await user.comparePassword(request.body.oldPassword);
+
+    if (!isPasswordMatched) {
+        return next(new ErrorHander("Old password is incorrect", 400));
+    }
+        
+    if (request.body.newPassword !== request.body.confirmPassword) {
+        return next(new ErrorHander("password does not match", 400));
+    }
+        
+    user.password = request.body.newPassword;
+    await user.save();
+    sendToken(user, 200, response);
+});
+
+
+    
 
 const updateProfile = catchAsyncErrors( async (request, response, next) => {
     console.log(request.body);
@@ -197,7 +244,9 @@ const updateProfile = catchAsyncErrors( async (request, response, next) => {
         success: true,
     });
 
-})
+});
+
+
 
 const getAllUser = catchAsyncErrors( async (request, response, next) => {
     const users = await User.find();
@@ -206,18 +255,18 @@ const getAllUser = catchAsyncErrors( async (request, response, next) => {
         success: true,
         users,
     });
-})
+});
 
 const getSingleUser = catchAsyncErrors( async (request, response, next) => {
     const user = await User.findById(request.params.id);
 
     if (!user) {
         return next(
-            new ErrorHandler(`User does not exist with Id: ${req.params.id}`)
+            new ErrorHandler(`User does not exist with Id: ${request.params.id}`)
         );
     }
 
-    res.status(200).json({
+    response.status(200).json({
         success: true,
         user,
     });
@@ -234,6 +283,10 @@ const updateUserRole = catchAsyncErrors( async (request, response, next) => {
         new: true,
         runValidators: true,
         useFindAndModify: false,
+    });
+
+    response.status(200).json({
+        success: true,
     });
 })
 

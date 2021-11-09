@@ -31,6 +31,7 @@ function Cart({history}) {
         dispatch(addItemsToCart(id, newQty));
     };
 
+    
     const deleteCartItems = (id) => {
         dispatch(removeItemsFromCart(id));
     };
